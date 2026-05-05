@@ -22,10 +22,13 @@ body{
   color:white;
 }
 
-.hidden{display:none;}
+#app{
+  display:none;
+}
 
 #contenido{
   padding:20px;
+  min-height:100vh;
 }
 
 .grid{
@@ -54,6 +57,8 @@ body{
 .lightbox img{
   width:95%;
 }
+
+.hidden{display:none;}
 
 .nav{
   position:fixed;

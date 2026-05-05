@@ -1,65 +1,53 @@
 let contenido;
-let appStarted = false;
 
-/* INICIO SEGURO GLOBAL */
 document.addEventListener("DOMContentLoaded", () => {
 
   contenido = document.getElementById("contenido");
 
   console.log("APP INICIALIZADA OK");
 
-  // BOTÓN (si existe)
   const btn = document.getElementById("btnStart");
+
   if (btn) {
     btn.addEventListener("click", startApp);
   }
 
-  // AUTO START fallback (clave anti-pantalla negra)
+  // AUTO START (anti pantalla negra)
   setTimeout(() => {
-    if (!appStarted) {
-      console.log("AUTO START ACTIVADO");
-      startApp();
-    }
-  }, 1500);
+    console.log("AUTO START ACTIVADO");
+    startApp();
+  }, 800);
 
-  // contenido inicial garantizado
-  safeRenderInicio();
+  // fallback visual obligatorio
+  renderSafe();
 });
+
+/* FALLBACK */
+function renderSafe() {
+  const c = document.getElementById("contenido");
+  if (!c) return;
+
+  c.innerHTML = `
+    <h2>💖 Cargando...</h2>
+    <p>Si no ves el menú, se iniciará automáticamente.</p>
+  `;
+}
 
 /* START */
 function startApp() {
-
-  if (appStarted) return;
-  appStarted = true;
 
   const hero = document.getElementById("hero");
   const app = document.getElementById("app");
 
   if (hero) hero.style.display = "none";
-  if (app) app.classList.remove("hidden");
-
-  // audio seguro
-  const audio = document.getElementById("musica");
-  if (audio) {
-    audio.play().catch(() => {});
-  }
+  if (app) app.style.display = "block";
 
   inicio();
 }
 
-/* FALLBACK VISUAL */
-function safeRenderInicio() {
-  const c = document.getElementById("contenido");
-  if (!c) return;
-
-  c.innerHTML = `
-    <h2>💖 Cargando recuerdo...</h2>
-    <p>Si no ves el menú, se iniciará automáticamente.</p>
-  `;
-}
-
 /* INICIO */
 function inicio() {
+
   if (!contenido) return;
 
   contenido.innerHTML = `
@@ -83,23 +71,23 @@ function menu() {
   `;
 }
 
-/* GALERÍAS SEGURAS */
+/* GALERÍAS */
 function verIsabella() {
-  contenido.innerHTML = buildGallery("isabella", 14);
+  contenido.innerHTML = build("isabella", 14);
 }
 
 function verAmor() {
-  contenido.innerHTML = buildGallery("amor", 4);
+  contenido.innerHTML = build("amor", 4);
 }
 
 function verFeliz() {
-  contenido.innerHTML = buildGallery("feliz", 4) + `
+  contenido.innerHTML = build("feliz", 4) + `
     <video controls playsinline src="video/feliz1.mp4"
       onerror="this.style.display='none'"></video>`;
 }
 
-/* BUILDER PROTEGIDO */
-function buildGallery(prefix, count) {
+/* BUILDER */
+function build(prefix, count) {
   let html = `<div class="grid">`;
 
   for (let i = 1; i <= count; i++) {
@@ -114,7 +102,7 @@ function buildGallery(prefix, count) {
   return html;
 }
 
-/* LIGHTBOX SAFE */
+/* LIGHTBOX */
 function verImg(src) {
   const lb = document.getElementById("lightbox");
   const img = document.getElementById("imgFull");
@@ -122,15 +110,14 @@ function verImg(src) {
   if (!lb || !img) return;
 
   lb.classList.remove("hidden");
-  img.src = src || "";
+  img.src = src;
 }
 
 function cerrarLightbox() {
-  const lb = document.getElementById("lightbox");
-  if (lb) lb.classList.add("hidden");
+  document.getElementById("lightbox")?.classList.add("hidden");
 }
 
-/* SELFIE SAFE */
+/* SELFIE */
 function selfie() {
 
   contenido.innerHTML = `
@@ -147,14 +134,11 @@ function selfie() {
       if (video) video.srcObject = stream;
     })
     .catch(() => {
-      contenido.innerHTML = `
-        <h3>No se pudo acceder a la cámara</h3>
-        <button class="btn" onclick="menu()">Volver</button>
-      `;
+      contenido.innerHTML = "<h3>No se pudo acceder a la cámara</h3>";
     });
 }
 
-/* CAPTURA SAFE */
+/* CAPTURA */
 function capturar() {
 
   const video = document.getElementById("camara");

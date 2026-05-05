@@ -1,0 +1,78 @@
+body{
+  margin:0;
+  font-family:sans-serif;
+  background:#0f0f1a;
+  color:white;
+  overflow-x:hidden;
+  overflow-y:auto;
+}
+
+/* fondo corazones */
+.hearts-bg span{
+  position:fixed;
+  color:#ff4d6d;
+  opacity:0.08;
+  animation:float linear infinite;
+}
+@keyframes float{
+  0%{transform:translateY(100vh)}
+  100%{transform:translateY(-10vh)}
+}
+
+.hero{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+
+.btn{
+  padding:15px 25px;
+  border:none;
+  border-radius:20px;
+  background:#ff2e63;
+  color:white;
+}
+
+/* app */
+.hidden{display:none;}
+
+#contenido{
+  padding:20px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.grid img{
+  width:100%;
+  border-radius:10px;
+}
+
+/* lightbox */
+.lightbox{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+.lightbox img{
+  width:95%;
+}
+
+/* nav */
+.nav{
+  position:fixed;
+  bottom:20px;
+  width:100%;
+  text-align:center;
+}

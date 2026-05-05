@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Para Mamá Sofía ❤️</title>
+
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff2e63">
+</head>
+
+<body>
+
+<div class="hearts-bg"></div>
+
+<audio id="musica" loop>
+  <source src="audio/musica.mp3">
+</audio>
+
+<div id="hero" class="hero">
+  <h1>Feliz Día Mamá ❤️</h1>
+  <button id="btnStart" class="btn">Empezar 💖</button>
+</div>
+
+<div id="app" class="hidden">
+  <div id="contenido"></div>
+
+  <div class="nav">
+    <button onclick="menu()" class="btn">Menú</button>
+  </div>
+</div>
+
+<div id="lightbox" class="lightbox hidden" onclick="cerrarLightbox()">
+  <img id="imgFull">
+</div>
+
+<script src="app.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+</body>
+</html>

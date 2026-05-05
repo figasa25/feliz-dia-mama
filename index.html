@@ -4,33 +4,60 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Para Mamá Sofía ❤️</title>
+<title>Mamá ❤️</title>
 
 <link rel="stylesheet" href="style.css">
-
-<meta name="theme-color" content="#ff2e63">
 </head>
 
 <body>
 
-<!-- HERO -->
-<div id="hero" class="hero">
-  <h1>Feliz Día Mamá ❤️</h1>
-  <button id="btnStart" class="btn">Empezar 💖</button>
-</div>
-
-<!-- APP -->
 <div id="app">
-  <div id="contenido"></div>
 
-  <div class="nav">
-    <button onclick="menu()" class="btn">Menú</button>
+  <!-- SPLASH -->
+  <div id="splash" class="center">
+    <h1>Mamá hoy es tu día ❤️</h1>
+    <img src="img/isabella2.jpg" class="preview">
+    <button onclick="goMenu()" class="btn">Empezar 💖</button>
   </div>
-</div>
 
-<!-- LIGHTBOX -->
-<div id="lightbox" class="lightbox hidden" onclick="cerrarLightbox()">
-  <img id="imgFull">
+  <!-- MENU -->
+  <div id="menu" class="hidden center">
+    <h2>Elegí qué querés ver 💭</h2>
+
+    <button class="btn" onclick="openGallery('isabella')">👶 Isabella (14 fotos)</button>
+    <button class="btn" onclick="openGallery('amor')">❤️ Amor (4 fotos)</button>
+    <button class="btn" onclick="openGallery('feliz')">😊 Feliz (4 fotos + video)</button>
+    <button class="btn" onclick="openSelfie()">📸 Selfie con Isa</button>
+  </div>
+
+  <!-- VIEWER -->
+  <div id="viewer" class="hidden">
+
+    <button class="btn small" onclick="backMenu()">⬅ Menú</button>
+
+    <div id="content"></div>
+
+    <div class="nav">
+      <button class="btn" onclick="prev()">⬅</button>
+      <button class="btn" onclick="next()">➡</button>
+    </div>
+  </div>
+
+  <!-- SELFIE -->
+  <div id="selfie" class="hidden center">
+    <h2>📸 Ponete junto a Isa</h2>
+
+    <video id="cam" autoplay playsinline></video>
+
+    <button class="btn" onclick="capture()">Tomar foto</button>
+
+    <canvas id="canvas" class="hidden"></canvas>
+
+    <div id="result"></div>
+
+    <button class="btn" onclick="backMenu()">Volver</button>
+  </div>
+
 </div>
 
 <script src="app.js"></script>

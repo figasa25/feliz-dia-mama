@@ -1,20 +1,81 @@
 body{
   margin:0;
   font-family:sans-serif;
-  background:#0b0b18;
+  background: radial-gradient(circle,#0b0b18,#050510);
   color:white;
+  overflow:hidden;
 }
 
+/* CANVAS BG */
+#bg{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:0;
+}
+
+/* APP */
+#app{
+  position:relative;
+  z-index:2;
+}
+
+/* CENTRO */
 .center{
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  text-align:center;
   min-height:100vh;
-  gap:15px;
+  text-align:center;
 }
 
+/* FADE */
+.fade{
+  animation:fade 1.5s ease;
+}
+
+@keyframes fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+/* GLASS CARD */
+.card{
+  margin:15px;
+  padding:25px;
+  border-radius:20px;
+
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
+
+  border:1px solid rgba(255,255,255,0.2);
+
+  font-size:18px;
+
+  position:relative;
+  overflow:hidden;
+}
+
+/* CORAZONES EN BOTONES */
+.card::before{
+  content:"❤️ 💖 💕 ❤️ 💖";
+  position:absolute;
+  width:200%;
+  top:0;
+  left:-60%;
+  opacity:0.25;
+  animation:float 6s linear infinite;
+}
+
+@keyframes float{
+  from{transform:translateX(0)}
+  to{transform:translateX(60%)}
+}
+
+/* BOTONES */
 .btn{
   padding:15px 25px;
   border:none;
@@ -27,18 +88,9 @@ body{
   padding:10px 15px;
 }
 
-.hidden{display:none;}
-
-.preview{
-  width:200px;
-  border-radius:15px;
-}
-
 /* VIEWER */
 #content img, #content video{
   width:100%;
-  max-height:70vh;
-  object-fit:contain;
   border-radius:15px;
 }
 
@@ -49,8 +101,8 @@ body{
   padding:10px;
 }
 
-/* CAMERA */
-video{
-  width:90%;
-  border-radius:15px;
+/* SELFIE */
+.love{
+  font-family:cursive;
+  color:#ffb6c1;
 }

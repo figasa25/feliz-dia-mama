@@ -6,61 +6,90 @@
 
 <title>Mamá ❤️</title>
 
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#ff2e63">
+
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+<canvas id="bg"></canvas>
+
+<audio id="musica" loop>
+  <source src="audio/musica.mp3">
+</audio>
+
 <div id="app">
 
-  <!-- SPLASH -->
-  <div id="splash" class="center">
-    <h1>Mamá hoy es tu día ❤️</h1>
-    <img src="img/isabella2.jpg" class="preview">
-    <button onclick="goMenu()" class="btn">Empezar 💖</button>
+<!-- INTRO CINEMÁTICA -->
+<div id="intro" class="center fade">
+  <h1>💖 Feliz Día Mamá</h1>
+  <p>Una historia hecha con amor...</p>
+  <button class="btn" onclick="start()">Comenzar</button>
+</div>
+
+<!-- MENU EMOCIONAL -->
+<div id="menu" class="hidden">
+
+  <div class="card" onclick="openGallery('reir')">
+    😄 ¿Querés reírte junto a Isa?
   </div>
 
-  <!-- MENU -->
-  <div id="menu" class="hidden center">
-    <h2>Elegí qué querés ver 💭</h2>
-
-    <button class="btn" onclick="openGallery('isabella')">👶 Isabella (14 fotos)</button>
-    <button class="btn" onclick="openGallery('amor')">❤️ Amor (4 fotos)</button>
-    <button class="btn" onclick="openGallery('feliz')">😊 Feliz (4 fotos + video)</button>
-    <button class="btn" onclick="openSelfie()">📸 Selfie con Isa</button>
+  <div class="card" onclick="openGallery('emocion')">
+    🥹 ¿Querés emocionarte?
   </div>
 
-  <!-- VIEWER -->
-  <div id="viewer" class="hidden">
-
-    <button class="btn small" onclick="backMenu()">⬅ Menú</button>
-
-    <div id="content"></div>
-
-    <div class="nav">
-      <button class="btn" onclick="prev()">⬅</button>
-      <button class="btn" onclick="next()">➡</button>
-    </div>
+  <div class="card" onclick="openGallery('familia')">
+    👨‍👩‍👧 Mirá qué hermosa familia tenés
   </div>
 
-  <!-- SELFIE -->
-  <div id="selfie" class="hidden center">
-    <h2>📸 Ponete junto a Isa</h2>
-
-    <video id="cam" autoplay playsinline></video>
-
-    <button class="btn" onclick="capture()">Tomar foto</button>
-
-    <canvas id="canvas" class="hidden"></canvas>
-
-    <div id="result"></div>
-
-    <button class="btn" onclick="backMenu()">Volver</button>
+  <div class="card glow" onclick="finalSurprise()">
+    💕 Ponete junto a Isa (sorpresa final)
   </div>
 
 </div>
 
+<!-- VIEWER -->
+<div id="viewer" class="hidden">
+
+  <button class="btn small" onclick="back()">⬅ Menú</button>
+
+  <div id="content"></div>
+
+  <div class="nav">
+    <button class="btn" onclick="prev()">⬅</button>
+    <button class="btn" onclick="next()">➡</button>
+  </div>
+
+</div>
+
+<!-- SELFIE FINAL -->
+<div id="selfie" class="hidden center">
+
+  <h2 class="love">💖 Ponete junto a Isa</h2>
+
+  <video id="cam" autoplay playsinline></video>
+
+  <button class="btn" onclick="capture()">📸 Sacar foto</button>
+
+  <canvas id="canvas" class="hidden"></canvas>
+
+  <div id="result"></div>
+
+  <button class="btn" onclick="backToMenu()">Volver</button>
+
+</div>
+
+</div>
+
 <script src="app.js"></script>
+
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./service-worker.js");
+}
+</script>
 
 </body>
 </html>

@@ -1,23 +1,36 @@
 let contenido;
+let appStarted = false;
 
+/* INICIO SEGURO GLOBAL */
 document.addEventListener("DOMContentLoaded", () => {
 
   contenido = document.getElementById("contenido");
 
-  const btn = document.getElementById("btnStart");
+  console.log("APP INICIALIZADA OK");
 
-  if (!btn) {
-    console.error("Botón de inicio no encontrado");
-    return;
+  // BOTÓN (si existe)
+  const btn = document.getElementById("btnStart");
+  if (btn) {
+    btn.addEventListener("click", startApp);
   }
 
-  btn.addEventListener("click", startApp);
+  // AUTO START fallback (clave anti-pantalla negra)
+  setTimeout(() => {
+    if (!appStarted) {
+      console.log("AUTO START ACTIVADO");
+      startApp();
+    }
+  }, 1500);
 
-  console.log("APP INICIALIZADA OK");
+  // contenido inicial garantizado
+  safeRenderInicio();
 });
 
-/* INICIO */
+/* START */
 function startApp() {
+
+  if (appStarted) return;
+  appStarted = true;
 
   const hero = document.getElementById("hero");
   const app = document.getElementById("app");
@@ -25,6 +38,7 @@ function startApp() {
   if (hero) hero.style.display = "none";
   if (app) app.classList.remove("hidden");
 
+  // audio seguro
   const audio = document.getElementById("musica");
   if (audio) {
     audio.play().catch(() => {});
@@ -33,17 +47,32 @@ function startApp() {
   inicio();
 }
 
-/* INICIO UI */
+/* FALLBACK VISUAL */
+function safeRenderInicio() {
+  const c = document.getElementById("contenido");
+  if (!c) return;
+
+  c.innerHTML = `
+    <h2>💖 Cargando recuerdo...</h2>
+    <p>Si no ves el menú, se iniciará automáticamente.</p>
+  `;
+}
+
+/* INICIO */
 function inicio() {
+  if (!contenido) return;
+
   contenido.innerHTML = `
     <h2>Mamá ❤️ hoy es tu día</h2>
-    <img src="img/isabella2.jpg" onclick="verImg(this.src)">
+    <img src="img/isabella2.jpg"
+      onerror="this.style.display='none'"
+      onclick="verImg(this.src)">
     <br><br>
     <button class="btn" onclick="menu()">Continuar</button>
   `;
 }
 
-/* MENÚ */
+/* MENU */
 function menu() {
   contenido.innerHTML = `
     <h2>Elegí 💭</h2>
@@ -54,39 +83,38 @@ function menu() {
   `;
 }
 
-/* GALERÍA ISABELLA */
+/* GALERÍAS SEGURAS */
 function verIsabella() {
-  let html = `<div class="grid">`;
-  for (let i = 1; i <= 14; i++) {
-    html += `<img src="img/isabella${i}.jpg" onclick="verImg(this.src)">`;
-  }
-  html += `</div>`;
-  contenido.innerHTML = html;
+  contenido.innerHTML = buildGallery("isabella", 14);
 }
 
-/* GALERÍA AMOR */
 function verAmor() {
-  let html = `<div class="grid">`;
-  for (let i = 1; i <= 4; i++) {
-    html += `<img src="img/amor${i}.jpg" onclick="verImg(this.src)">`;
-  }
-  html += `</div>`;
-  contenido.innerHTML = html;
+  contenido.innerHTML = buildGallery("amor", 4);
 }
 
-/* GALERÍA + VIDEO */
 function verFeliz() {
-  let html = `<div class="grid">`;
-  for (let i = 1; i <= 4; i++) {
-    html += `<img src="img/feliz${i}.jpg" onclick="verImg(this.src)">`;
-  }
-  html += `</div>
-  <video controls playsinline src="video/feliz1.mp4"></video>`;
-
-  contenido.innerHTML = html;
+  contenido.innerHTML = buildGallery("feliz", 4) + `
+    <video controls playsinline src="video/feliz1.mp4"
+      onerror="this.style.display='none'"></video>`;
 }
 
-/* LIGHTBOX */
+/* BUILDER PROTEGIDO */
+function buildGallery(prefix, count) {
+  let html = `<div class="grid">`;
+
+  for (let i = 1; i <= count; i++) {
+    html += `
+      <img src="img/${prefix}${i}.jpg"
+        onerror="this.style.display='none'"
+        onclick="verImg(this.src)">
+    `;
+  }
+
+  html += `</div>`;
+  return html;
+}
+
+/* LIGHTBOX SAFE */
 function verImg(src) {
   const lb = document.getElementById("lightbox");
   const img = document.getElementById("imgFull");
@@ -94,7 +122,7 @@ function verImg(src) {
   if (!lb || !img) return;
 
   lb.classList.remove("hidden");
-  img.src = src;
+  img.src = src || "";
 }
 
 function cerrarLightbox() {
@@ -102,28 +130,31 @@ function cerrarLightbox() {
   if (lb) lb.classList.add("hidden");
 }
 
-/* SELFIE */
+/* SELFIE SAFE */
 function selfie() {
 
   contenido.innerHTML = `
-    <h2>📸 Selfie con Isa</h2>
+    <h2>📸 Selfie</h2>
     <video id="camara" autoplay playsinline></video>
     <br><br>
     <button class="btn" onclick="capturar()">Tomar foto</button>
     <canvas id="canvas" class="hidden"></canvas>
   `;
 
-  navigator.mediaDevices.getUserMedia({ video: true })
+  navigator.mediaDevices?.getUserMedia({ video: true })
     .then(stream => {
       const video = document.getElementById("camara");
       if (video) video.srcObject = stream;
     })
     .catch(() => {
-      contenido.innerHTML = "<h3>No se pudo acceder a la cámara</h3>";
+      contenido.innerHTML = `
+        <h3>No se pudo acceder a la cámara</h3>
+        <button class="btn" onclick="menu()">Volver</button>
+      `;
     });
 }
 
-/* CAPTURA */
+/* CAPTURA SAFE */
 function capturar() {
 
   const video = document.getElementById("camara");
@@ -133,8 +164,8 @@ function capturar() {
 
   const ctx = canvas.getContext("2d");
 
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
+  canvas.width = video.videoWidth || 300;
+  canvas.height = video.videoHeight || 300;
 
   ctx.drawImage(video, 0, 0);
 
@@ -142,17 +173,16 @@ function capturar() {
   ctx.fillRect(0, canvas.height - 100, canvas.width, 100);
 
   ctx.fillStyle = "#ff2e63";
-  ctx.font = "24px sans-serif";
-  ctx.fillText("Muy Feliz Día Mamá ❤️", 20, canvas.height - 60);
-
-  ctx.fillStyle = "#333";
-  ctx.fillText("Gracias por ser mi mamá", 20, canvas.height - 30);
+  ctx.font = "20px sans-serif";
+  ctx.fillText("Feliz Día Mamá ❤️", 20, canvas.height - 60);
 
   const img = canvas.toDataURL("image/png");
 
   contenido.innerHTML = `
     <img src="${img}">
     <br><br>
-    <a href="${img}" download="selfie.png" class="btn">Guardar</a>
+    <a class="btn" href="${img}" download="selfie.png">Guardar</a>
+    <br><br>
+    <button class="btn" onclick="menu()">Volver</button>
   `;
 }

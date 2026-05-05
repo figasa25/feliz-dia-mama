@@ -9,7 +9,6 @@
 <title>Para Mamá Sofía ❤️</title>
 
 <link rel="stylesheet" href="style.css">
-<link rel="manifest" href="manifest.json">
 
 <meta name="theme-color" content="#ff2e63">
 </head>
@@ -19,14 +18,16 @@
 <div class="hearts-bg"></div>
 
 <audio id="musica" loop>
-  <source src="audio/musica.mp3">
+  <source src="audio/musica.mp3" type="audio/mp3">
 </audio>
 
+<!-- HERO -->
 <div id="hero" class="hero">
   <h1>Feliz Día Mamá ❤️</h1>
   <button id="btnStart" class="btn">Empezar 💖</button>
 </div>
 
+<!-- APP -->
 <div id="app" class="hidden">
   <div id="contenido"></div>
 
@@ -35,17 +36,12 @@
   </div>
 </div>
 
+<!-- LIGHTBOX -->
 <div id="lightbox" class="lightbox hidden" onclick="cerrarLightbox()">
   <img id="imgFull">
 </div>
 
 <script src="app.js"></script>
-
-<script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
-}
-</script>
 
 </body>
 </html>

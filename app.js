@@ -1,17 +1,41 @@
-const contenido = document.getElementById("contenido");
+let contenido;
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  contenido = document.getElementById("contenido");
+
+  const btn = document.getElementById("btnStart");
+
+  if (!btn) {
+    console.error("Botón de inicio no encontrado");
+    return;
+  }
+
+  btn.addEventListener("click", startApp);
+
+  console.log("APP INICIALIZADA OK");
+});
 
 /* INICIO */
-document.getElementById("btnStart").onclick = () => {
-  document.getElementById("hero").style.display="none";
-  document.getElementById("app").classList.remove("hidden");
+function startApp() {
 
-  document.getElementById("musica").play().catch(()=>{});
+  const hero = document.getElementById("hero");
+  const app = document.getElementById("app");
+
+  if (hero) hero.style.display = "none";
+  if (app) app.classList.remove("hidden");
+
+  const audio = document.getElementById("musica");
+  if (audio) {
+    audio.play().catch(() => {});
+  }
+
   inicio();
-};
+}
 
-/* PANTALLA INICIAL */
-function inicio(){
-  contenido.innerHTML=`
+/* INICIO UI */
+function inicio() {
+  contenido.innerHTML = `
     <h2>Mamá ❤️ hoy es tu día</h2>
     <img src="img/isabella2.jpg" onclick="verImg(this.src)">
     <br><br>
@@ -19,9 +43,9 @@ function inicio(){
   `;
 }
 
-/* MENU */
-function menu(){
-  contenido.innerHTML=`
+/* MENÚ */
+function menu() {
+  contenido.innerHTML = `
     <h2>Elegí 💭</h2>
     <button class="btn" onclick="verIsabella()">👶 Isabella</button>
     <button class="btn" onclick="verAmor()">❤️ Amor</button>
@@ -30,48 +54,58 @@ function menu(){
   `;
 }
 
-/* GALERÍAS */
-function verIsabella(){
-  let html=`<div class="grid">`;
-  for(let i=1;i<=14;i++){
-    html+=`<img src="img/isabella${i}.jpg" onclick="verImg(this.src)">`;
+/* GALERÍA ISABELLA */
+function verIsabella() {
+  let html = `<div class="grid">`;
+  for (let i = 1; i <= 14; i++) {
+    html += `<img src="img/isabella${i}.jpg" onclick="verImg(this.src)">`;
   }
-  html+=`</div>`;
-  contenido.innerHTML=html;
+  html += `</div>`;
+  contenido.innerHTML = html;
 }
 
-function verAmor(){
-  let html=`<div class="grid">`;
-  for(let i=1;i<=4;i++){
-    html+=`<img src="img/amor${i}.jpg" onclick="verImg(this.src)">`;
+/* GALERÍA AMOR */
+function verAmor() {
+  let html = `<div class="grid">`;
+  for (let i = 1; i <= 4; i++) {
+    html += `<img src="img/amor${i}.jpg" onclick="verImg(this.src)">`;
   }
-  html+=`</div>`;
-  contenido.innerHTML=html;
+  html += `</div>`;
+  contenido.innerHTML = html;
 }
 
-function verFeliz(){
-  let html=`<div class="grid">`;
-  for(let i=1;i<=4;i++){
-    html+=`<img src="img/feliz${i}.jpg" onclick="verImg(this.src)">`;
+/* GALERÍA + VIDEO */
+function verFeliz() {
+  let html = `<div class="grid">`;
+  for (let i = 1; i <= 4; i++) {
+    html += `<img src="img/feliz${i}.jpg" onclick="verImg(this.src)">`;
   }
-  html+=`</div>
+  html += `</div>
   <video controls playsinline src="video/feliz1.mp4"></video>`;
-  contenido.innerHTML=html;
+
+  contenido.innerHTML = html;
 }
 
 /* LIGHTBOX */
-function verImg(src){
-  document.getElementById("lightbox").classList.remove("hidden");
-  document.getElementById("imgFull").src=src;
-}
-function cerrarLightbox(){
-  document.getElementById("lightbox").classList.add("hidden");
+function verImg(src) {
+  const lb = document.getElementById("lightbox");
+  const img = document.getElementById("imgFull");
+
+  if (!lb || !img) return;
+
+  lb.classList.remove("hidden");
+  img.src = src;
 }
 
-/* SELFIE PRO */
-function selfie(){
+function cerrarLightbox() {
+  const lb = document.getElementById("lightbox");
+  if (lb) lb.classList.add("hidden");
+}
 
-  contenido.innerHTML=`
+/* SELFIE */
+function selfie() {
+
+  contenido.innerHTML = `
     <h2>📸 Selfie con Isa</h2>
     <video id="camara" autoplay playsinline></video>
     <br><br>
@@ -79,36 +113,44 @@ function selfie(){
     <canvas id="canvas" class="hidden"></canvas>
   `;
 
-  navigator.mediaDevices.getUserMedia({video:true})
-  .then(stream=>{
-    document.getElementById("camara").srcObject=stream;
-  });
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      const video = document.getElementById("camara");
+      if (video) video.srcObject = stream;
+    })
+    .catch(() => {
+      contenido.innerHTML = "<h3>No se pudo acceder a la cámara</h3>";
+    });
 }
 
-function capturar(){
+/* CAPTURA */
+function capturar() {
 
-  const video=document.getElementById("camara");
-  const canvas=document.getElementById("canvas");
-  const ctx=canvas.getContext("2d");
+  const video = document.getElementById("camara");
+  const canvas = document.getElementById("canvas");
 
-  canvas.width=video.videoWidth;
-  canvas.height=video.videoHeight;
+  if (!video || !canvas) return;
 
-  ctx.drawImage(video,0,0);
+  const ctx = canvas.getContext("2d");
 
-  ctx.fillStyle="white";
-  ctx.fillRect(0,canvas.height-100,canvas.width,100);
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
 
-  ctx.fillStyle="#ff2e63";
-  ctx.font="24px sans-serif";
-  ctx.fillText("Muy Feliz Día Mamá ❤️",20,canvas.height-60);
+  ctx.drawImage(video, 0, 0);
 
-  ctx.fillStyle="#333";
-  ctx.fillText("Gracias por ser mi mamá",20,canvas.height-30);
+  ctx.fillStyle = "white";
+  ctx.fillRect(0, canvas.height - 100, canvas.width, 100);
 
-  const img=canvas.toDataURL();
+  ctx.fillStyle = "#ff2e63";
+  ctx.font = "24px sans-serif";
+  ctx.fillText("Muy Feliz Día Mamá ❤️", 20, canvas.height - 60);
 
-  contenido.innerHTML=`
+  ctx.fillStyle = "#333";
+  ctx.fillText("Gracias por ser mi mamá", 20, canvas.height - 30);
+
+  const img = canvas.toDataURL("image/png");
+
+  contenido.innerHTML = `
     <img src="${img}">
     <br><br>
     <a href="${img}" download="selfie.png" class="btn">Guardar</a>

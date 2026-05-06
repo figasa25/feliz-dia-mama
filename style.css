@@ -1,108 +1,52 @@
 body{
   margin:0;
   font-family:sans-serif;
-  background: radial-gradient(circle,#0b0b18,#050510);
+  background:#7a0000;
   color:white;
   overflow:hidden;
 }
 
-/* CANVAS BG */
-#bg{
-  position:fixed;
-  top:0;
-  left:0;
+/* escenas */
+.scene{
+  position:absolute;
   width:100%;
-  height:100%;
-  z-index:0;
-}
-
-/* APP */
-#app{
-  position:relative;
-  z-index:2;
-}
-
-/* CENTRO */
-.center{
+  height:100vh;
   display:flex;
   flex-direction:column;
-  align-items:center;
   justify-content:center;
-  min-height:100vh;
-  text-align:center;
+  align-items:center;
 }
 
-/* FADE */
-.fade{
-  animation:fade 1.5s ease;
+.hidden{display:none}
+
+/* intro */
+.intro-text{
+  font-size:30px;
+  animation:intro 4s forwards;
 }
 
-@keyframes fade{
-  from{opacity:0}
-  to{opacity:1}
+@keyframes intro{
+  0%{opacity:1;transform:scale(1)}
+  100%{opacity:0;transform:scale(0.4)}
 }
 
-/* GLASS CARD */
-.card{
-  margin:15px;
-  padding:25px;
-  border-radius:20px;
-
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(18px);
-
-  border:1px solid rgba(255,255,255,0.2);
-
-  font-size:18px;
-
-  position:relative;
-  overflow:hidden;
-}
-
-/* CORAZONES EN BOTONES */
-.card::before{
-  content:"❤️ 💖 💕 ❤️ 💖";
-  position:absolute;
-  width:200%;
-  top:0;
-  left:-60%;
-  opacity:0.25;
-  animation:float 6s linear infinite;
-}
-
-@keyframes float{
-  from{transform:translateX(0)}
-  to{transform:translateX(60%)}
-}
-
-/* BOTONES */
+/* botones */
 .btn{
+  margin:10px;
   padding:15px 25px;
-  border:none;
-  border-radius:15px;
-  background:#ff2e63;
-  color:white;
+  border-radius:20px;
+  background:rgba(255,255,255,0.2);
 }
 
-.small{
-  padding:10px 15px;
+.small{font-size:14px}
+
+/* viewer */
+#viewer img{
+  width:90%;
+  border-radius:20px;
 }
 
-/* VIEWER */
-#content img, #content video{
-  width:100%;
-  border-radius:15px;
-}
-
-/* NAV */
-.nav{
-  display:flex;
-  justify-content:space-between;
-  padding:10px;
-}
-
-/* SELFIE */
-.love{
-  font-family:cursive;
-  color:#ffb6c1;
+/* video */
+video{
+  width:90%;
 }

@@ -6,6 +6,7 @@
 
 <title>Sofi ❤️</title>
 
+<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#ff2e63">
 
@@ -14,47 +15,89 @@
 
 <body>
 
+<!-- FONDO -->
 <canvas id="bg"></canvas>
 
-<audio id="music" loop>
-  <source src="audio/musica.mp3">
-</audio>
+<!-- ===== AUDIOS ===== -->
+<audio id="feliz" src="audio/feliz dia.mp3"></audio>
+<audio id="sos" src="audio/sos la mejor.mp3"></audio>
+<audio id="gusta" src="audio/me gusta cuando.mp3"></audio>
+<audio id="musica" src="audio/musica.mp3"></audio>
 
-<!-- INTRO -->
-<div id="intro" class="scene active">
-  <h1 class="intro-text">Sofi, feliz día de la madre ❤️</h1>
+<!-- ===== INTRO ===== -->
+<div id="intro" class="scene">
+  <h1 class="intro-text">
+    Sofi, feliz día de la madre ❤️
+  </h1>
 </div>
 
-<!-- MENU -->
+<!-- ===== MENU ===== -->
 <div id="menu" class="scene hidden">
-  <div class="btn" onclick="openGallery('familia')">👨‍👩‍👧 Familia</div>
-  <div class="btn" onclick="openGallery('felicidad')">😄 Felicidad</div>
-  <div class="btn" onclick="openGallery('tesoro')">💎 Tesoro</div>
-  <div class="btn small" onclick="openSurprise()">💕 Sorpresa</div>
+
+  <div class="btn" onclick="openGallery('familia')">
+    👨‍👩‍👧 Momentos en familia
+  </div>
+
+  <div class="btn" onclick="openGallery('felicidad')">
+    😄 La felicidad
+  </div>
+
+  <div class="btn" onclick="openGallery('tesoro')">
+    💎 Tu tesoro
+  </div>
+
+  <div class="btn" onclick="emocionarte()">
+    💖 Para emocionarte
+  </div>
+
+  <div class="btn" onclick="compilado()">
+    🎬 Ver todo con música
+  </div>
+
+  <div class="btn small" onclick="openSurprise()">
+    📸 Sorpresa
+  </div>
+
 </div>
 
-<!-- VIEWER -->
+<!-- ===== VISOR ===== -->
 <div id="viewer" class="scene hidden">
+
   <img id="viewerImg">
+
   <div class="nav">
     <button onclick="prev()">⬅</button>
     <button onclick="next()">➡</button>
   </div>
-  <button onclick="back()">Menú</button>
+
+  <button onclick="back()">⬅ Volver</button>
+
 </div>
 
-<!-- SELFIE -->
+<!-- ===== SELFIE ===== -->
 <div id="selfie" class="scene hidden">
+
+  <h2>💖 Abrazá a Isabela y sonrían</h2>
+
   <video id="cam" autoplay playsinline></video>
-  <button onclick="takePhoto()">📸 Foto</button>
+
+  <br>
+
+  <button onclick="takePhoto()">📸 Sacar foto</button>
+
   <canvas id="canvas" class="hidden"></canvas>
+
   <div id="result"></div>
+
+  <button onclick="back()">⬅ Volver</button>
+
 </div>
 
+<!-- ===== SCRIPT ===== -->
 <script src="app.js"></script>
 
 <script>
-if("serviceWorker" in navigator){
+if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./service-worker.js");
 }
 </script>

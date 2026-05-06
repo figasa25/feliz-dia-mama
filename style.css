@@ -22,10 +22,10 @@ body{
 /* intro */
 .intro-text{
   font-size:30px;
-  animation:intro 4s forwards;
+  animation:introAnim 4s forwards;
 }
 
-@keyframes intro{
+@keyframes introAnim{
   0%{opacity:1;transform:scale(1)}
   100%{opacity:0;transform:scale(0.4)}
 }
@@ -49,4 +49,9 @@ body{
 /* video */
 video{
   width:90%;
+}
+
+/* nav */
+.nav{
+  margin:10px;
 }

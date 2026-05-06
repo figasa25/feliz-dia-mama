@@ -2,105 +2,194 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Sofi ❤️</title>
-
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff2e63">
-
+<meta name="theme-color" content="#1a0005">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<!-- FONDO -->
+<!-- GRAIN OVERLAY -->
+<div class="grain"></div>
+
+<!-- CANVAS FONDO -->
 <canvas id="bg"></canvas>
 
-<!-- ===== AUDIOS ===== -->
-<audio id="feliz" src="audio/feliz dia.mp3"></audio>
-<audio id="sos" src="audio/sos la mejor.mp3"></audio>
-<audio id="gusta" src="audio/me gusta cuando.mp3"></audio>
-<audio id="musica" src="audio/musica.mp3"></audio>
+<!-- AUDIOS -->
+<audio id="audio-feliz" src="audio/feliz dia.mp3" loop></audio>
+<audio id="audio-sos" src="audio/sos la mejor.mp3" loop></audio>
+<audio id="audio-gusta" src="audio/me gusta cuando.mp3" loop></audio>
+<audio id="audio-musica" src="audio/musica.mp3" loop></audio>
 
 <!-- ===== INTRO ===== -->
-<div id="intro" class="scene">
-  <h1 class="intro-text">
-    Sofi, feliz día de la madre ❤️
-  </h1>
+<div id="scene-intro" class="scene active">
+  <div class="intro-inner">
+    <div class="intro-petals" id="introPetals"></div>
+    <div class="intro-logo">
+      <div class="intro-heart-icon">❤</div>
+      <h1 class="intro-title">Sofi</h1>
+      <p class="intro-subtitle">Feliz Día de la Madre</p>
+      <div class="intro-line"></div>
+      <p class="intro-year">2025</p>
+    </div>
+  </div>
 </div>
 
 <!-- ===== MENU ===== -->
-<div id="menu" class="scene hidden">
+<div id="scene-menu" class="scene hidden">
+  <div class="menu-bg-blur"></div>
 
-  <div class="btn" onclick="openGallery('familia')">
-    👨‍👩‍👧 Momentos en familia
+  <header class="menu-header">
+    <div class="menu-title-wrap">
+      <span class="menu-heart">❤</span>
+      <h2 class="menu-title">Para ti, Sofi</h2>
+      <span class="menu-heart">❤</span>
+    </div>
+    <p class="menu-sub">Con todo el amor del mundo</p>
+  </header>
+
+  <div class="menu-buttons">
+
+    <button class="heart-btn" id="btn-familia" onclick="openGallery('familia')">
+      <div class="heart-btn-bg"></div>
+      <div class="heart-rain" id="rain-familia"></div>
+      <div class="heart-btn-content">
+        <span class="btn-icon">👨‍👩‍👧</span>
+        <span class="btn-label">En Familia</span>
+        <span class="btn-sub">Momentos únicos</span>
+      </div>
+    </button>
+
+    <button class="heart-btn" id="btn-felicidad" onclick="openGallery('felicidad')">
+      <div class="heart-btn-bg"></div>
+      <div class="heart-rain" id="rain-felicidad"></div>
+      <div class="heart-btn-content">
+        <span class="btn-icon">😄</span>
+        <span class="btn-label">Compartiendo Juntas</span>
+        <span class="btn-sub">La alegría de estar</span>
+      </div>
+    </button>
+
+    <button class="heart-btn gold" id="btn-tesoro" onclick="openGallery('tesoro')">
+      <div class="heart-btn-bg"></div>
+      <div class="heart-rain" id="rain-tesoro"></div>
+      <div class="heart-btn-content">
+        <span class="btn-icon">💎</span>
+        <span class="btn-label">Tu Tesoro</span>
+        <span class="btn-sub">Isabela ❤️</span>
+      </div>
+    </button>
+
+    <div class="menu-bottom-row">
+      <button class="heart-btn small" onclick="openSlideshowFull()">
+        <div class="heart-btn-bg"></div>
+        <div class="heart-rain" id="rain-video"></div>
+        <div class="heart-btn-content">
+          <span class="btn-icon">🎬</span>
+          <span class="btn-label">Película</span>
+          <span class="btn-sub">Todo con música</span>
+        </div>
+      </button>
+
+      <button class="heart-btn small surprise" onclick="openSurprise()">
+        <div class="heart-btn-bg"></div>
+        <div class="heart-rain" id="rain-surprise"></div>
+        <div class="heart-btn-content">
+          <span class="btn-icon">📸</span>
+          <span class="btn-label">Sorpresa</span>
+          <span class="btn-sub">Para las dos</span>
+        </div>
+      </button>
+    </div>
+
   </div>
-
-  <div class="btn" onclick="openGallery('felicidad')">
-    😄 La felicidad
-  </div>
-
-  <div class="btn" onclick="openGallery('tesoro')">
-    💎 Tu tesoro
-  </div>
-
-  <div class="btn" onclick="emocionarte()">
-    💖 Para emocionarte
-  </div>
-
-  <div class="btn" onclick="compilado()">
-    🎬 Ver todo con música
-  </div>
-
-  <div class="btn small" onclick="openSurprise()">
-    📸 Sorpresa
-  </div>
-
 </div>
 
-<!-- ===== VISOR ===== -->
-<div id="viewer" class="scene hidden">
+<!-- ===== VISOR (galería + slideshow) ===== -->
+<div id="scene-viewer" class="scene hidden">
+  <div class="viewer-overlay"></div>
 
-  <img id="viewerImg">
-
-  <div class="nav">
-    <button onclick="prev()">⬅</button>
-    <button onclick="next()">➡</button>
+  <div class="viewer-header">
+    <button class="back-btn" onclick="goBack()">
+      <span>←</span> Volver
+    </button>
+    <div class="viewer-title" id="viewerTitle"></div>
   </div>
 
-  <button onclick="back()">⬅ Volver</button>
+  <!-- Foto / Video actual -->
+  <div class="viewer-media-wrap" id="mediaWrap">
+    <img id="viewerImg" class="viewer-img" src="" alt="">
+    <video id="viewerVid" class="viewer-vid hidden" controls playsinline></video>
+    <div class="viewer-vignette"></div>
+  </div>
 
+  <!-- Controles -->
+  <div class="viewer-controls">
+    <button class="nav-btn" onclick="prevItem()">‹</button>
+    <div class="viewer-counter" id="viewerCounter"></div>
+    <button class="nav-btn" onclick="nextItem()">›</button>
+  </div>
+
+  <!-- Thumbnails -->
+  <div class="thumbs-strip" id="thumbsStrip"></div>
+
+  <!-- Slideshow auto -->
+  <div class="slideshow-bar" id="slideshowBar" style="display:none">
+    <div class="slideshow-progress" id="slideshowProgress"></div>
+  </div>
 </div>
 
 <!-- ===== SELFIE ===== -->
-<div id="selfie" class="scene hidden">
+<div id="scene-selfie" class="scene hidden">
+  <div class="selfie-bg"></div>
 
-  <h2>💖 Abrazá a Isabela y sonrían</h2>
+  <div class="selfie-header">
+    <button class="back-btn" onclick="goBack()">← Volver</button>
+    <h2 class="selfie-title">💖 Sorpresa</h2>
+  </div>
 
-  <video id="cam" autoplay playsinline></video>
+  <div class="selfie-instruction">
+    <p>Sofi, buscá a Isa,<br>abrazala y sonrían ❤️</p>
+  </div>
 
-  <br>
+  <div class="selfie-frame-wrap" id="selfieFrameWrap">
+    <div class="selfie-frame">
+      <video id="cam" autoplay playsinline muted></video>
+      <canvas id="canvas" class="hidden"></canvas>
+      <div class="selfie-heart-corners">
+        <span class="shc tl">❤</span>
+        <span class="shc tr">❤</span>
+        <span class="shc bl">❤</span>
+        <span class="shc br">❤</span>
+      </div>
+    </div>
+  </div>
 
-  <button onclick="takePhoto()">📸 Sacar foto</button>
+  <div class="selfie-result hidden" id="selfieResult">
+    <img id="resultImg" src="" alt="Foto">
+    <a id="downloadBtn" href="" download="feliz-dia-mama.jpg" class="download-btn">
+      ⬇ Guardar foto
+    </a>
+  </div>
 
-  <canvas id="canvas" class="hidden"></canvas>
-
-  <div id="result"></div>
-
-  <button onclick="back()">⬅ Volver</button>
-
+  <div class="selfie-actions">
+    <button class="selfie-btn" id="takePhotoBtn" onclick="takePhoto()">📸 ¡Sacar foto!</button>
+    <button class="selfie-btn secondary hidden" id="retakeBtn" onclick="retakePhoto()">🔄 Otra foto</button>
+  </div>
 </div>
 
-<!-- ===== SCRIPT ===== -->
 <script src="app.js"></script>
-
 <script>
-if ("serviceWorker" in navigator) {
+if("serviceWorker" in navigator){
   navigator.serviceWorker.register("./service-worker.js");
 }
 </script>
-
 </body>
 </html>

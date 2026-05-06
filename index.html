@@ -4,90 +4,46 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Mamá ❤️</title>
+<base href="/feliz-dia-mama/">
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff2e63">
+<title>Para Mamá Sofía ❤️</title>
 
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+
+<meta name="theme-color" content="#ff2e63">
 </head>
 
 <body>
 
-<canvas id="bg"></canvas>
+<div class="hearts-bg"></div>
 
 <audio id="musica" loop>
   <source src="audio/musica.mp3">
 </audio>
 
-<div id="app">
-
-<!-- INTRO CINEMÁTICA -->
-<div id="intro" class="center fade">
-  <h1>💖 Feliz Día Mamá</h1>
-  <p>Una historia hecha con amor...</p>
-  <button class="btn" onclick="start()">Comenzar</button>
+<div id="hero" class="hero">
+  <h1>Feliz Día Mamá ❤️</h1>
+  <button id="btnStart" class="btn">Empezar 💖</button>
 </div>
 
-<!-- MENU EMOCIONAL -->
-<div id="menu" class="hidden">
-
-  <div class="card" onclick="openGallery('reir')">
-    😄 ¿Querés reírte junto a Isa?
-  </div>
-
-  <div class="card" onclick="openGallery('emocion')">
-    🥹 ¿Querés emocionarte?
-  </div>
-
-  <div class="card" onclick="openGallery('familia')">
-    👨‍👩‍👧 Mirá qué hermosa familia tenés
-  </div>
-
-  <div class="card glow" onclick="finalSurprise()">
-    💕 Ponete junto a Isa (sorpresa final)
-  </div>
-
-</div>
-
-<!-- VIEWER -->
-<div id="viewer" class="hidden">
-
-  <button class="btn small" onclick="back()">⬅ Menú</button>
-
-  <div id="content"></div>
+<div id="app" class="hidden">
+  <div id="contenido"></div>
 
   <div class="nav">
-    <button class="btn" onclick="prev()">⬅</button>
-    <button class="btn" onclick="next()">➡</button>
+    <button onclick="menu()" class="btn">Menú</button>
   </div>
-
 </div>
 
-<!-- SELFIE FINAL -->
-<div id="selfie" class="hidden center">
-
-  <h2 class="love">💖 Ponete junto a Isa</h2>
-
-  <video id="cam" autoplay playsinline></video>
-
-  <button class="btn" onclick="capture()">📸 Sacar foto</button>
-
-  <canvas id="canvas" class="hidden"></canvas>
-
-  <div id="result"></div>
-
-  <button class="btn" onclick="backToMenu()">Volver</button>
-
-</div>
-
+<div id="lightbox" class="lightbox hidden" onclick="cerrarLightbox()">
+  <img id="imgFull">
 </div>
 
 <script src="app.js"></script>
 
 <script>
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./service-worker.js");
+  navigator.serviceWorker.register("service-worker.js");
 }
 </script>
 

@@ -37,7 +37,7 @@
       <h1 class="intro-title">Sofi</h1>
       <p class="intro-subtitle">Feliz Día de la Madre</p>
       <div class="intro-line"></div>
-      <p class="intro-year">2025</p>
+      <p class="intro-year">2026</p>
     </div>
   </div>
 </div>
@@ -183,6 +183,53 @@
     <button class="selfie-btn" id="takePhotoBtn" onclick="takePhoto()">📸 ¡Sacar foto!</button>
     <button class="selfie-btn secondary hidden" id="retakeBtn" onclick="retakePhoto()">🔄 Otra foto</button>
   </div>
+</div>
+
+<!-- ===== PELÍCULA CINEMÁTICA ===== -->
+<div id="scene-movie" class="scene hidden">
+
+  <!-- Canvas full screen -->
+  <canvas id="movieCanvas"></canvas>
+
+  <!-- Letterbox bars -->
+  <div class="movie-letterbox top"></div>
+  <div class="movie-letterbox bottom"></div>
+
+  <!-- Grain -->
+  <div class="movie-grain"></div>
+
+  <!-- Dedicatoria esquina superior derecha -->
+  <div class="movie-dedication" id="movieDedication">
+    <div class="ded-ornament">✦</div>
+    <p class="ded-line1">Feliz Día</p>
+    <p class="ded-line2">Mamá</p>
+    <div class="ded-divider"></div>
+    <p class="ded-line3">Te amo mucho</p>
+    <p class="ded-line4">Isabella</p>
+    <div class="ded-hearts">
+      <span>❤</span><span>❤</span><span>❤</span>
+    </div>
+  </div>
+
+  <!-- Título de slide (fade in/out) -->
+  <div class="movie-caption" id="movieCaption"></div>
+
+  <!-- Barra inferior (se oculta automático) -->
+  <div class="movie-ui" id="movieUI">
+    <div class="movie-progress-wrap">
+      <div class="movie-progress-bg">
+        <div class="movie-progress-fill" id="movieProgressFill"></div>
+      </div>
+      <span class="movie-counter" id="movieCounter"></span>
+    </div>
+    <div class="movie-controls-row">
+      <button class="movie-btn" onclick="movieBack()">← Volver</button>
+      <button class="movie-btn icon" id="moviePlayBtn" onclick="movieTogglePlay()">⏸</button>
+      <button class="movie-btn icon" onclick="moviePrev()">‹</button>
+      <button class="movie-btn icon" onclick="movieNext()">›</button>
+    </div>
+  </div>
+
 </div>
 
 <script src="app.js"></script>
